@@ -1,0 +1,34 @@
+version: "2"
+services:
+  server:
+    image: node
+    command: npm start
+    working_dir: /code
+    volumes:
+      - .:/code
+    links:
+      - rethinkdb
+      - rabbitmq
+    depends_on:
+      - rethinkdb
+      - rabbitmq
+    ports:
+      - "8888:8888"
+  worker:
+    image: node
+    command: npm run worker
+    working_dir: /code
+    volumes:
+      - .:/code
+    links:
+      - rethinkdb
+      - rabbitmq
+    depends_on:
+      - rethinkdb
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq
+  rethinkdb:
+    image: rethinkdb
+    ports:
+      - "8080:8080"

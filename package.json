@@ -1,0 +1,33 @@
+{
+  "name": "fetch-queue",
+  "version": "1.0.0",
+  "description": "simple queued url fetching system",
+  "main": "server.js",
+  "scripts": {
+    "start": "babel-node server.js --presets es2015,stage-0",
+    "worker": "babel-node worker.js --presets es2015,stage-0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markthom-as/fetch-queue.git"
+  },
+  "author": "Mark Thomas Marcantano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markthom-as/fetch-queue/issues"
+  },
+  "homepage": "https://github.com/markthom-as/fetch-queue#readme",
+  "dependencies": {
+    "download": "^5.0.2",
+    "hapi": "^13.5.2",
+    "jackrabbit": "^4.3.0",
+    "rethinkdb": "^2.3.2",
+    "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0"
+  }
+}
