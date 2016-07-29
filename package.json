@@ -19,10 +19,11 @@
   },
   "homepage": "https://github.com/markthom-as/fetch-queue#readme",
   "dependencies": {
-    "download": "^5.0.2",
+    "format-url": "^1.1.0",
     "hapi": "^13.5.2",
     "jackrabbit": "^4.3.0",
     "rethinkdb": "^2.3.2",
+    "url-validator": "^2.0.3",
     "uuid": "^2.0.2"
   },
   "devDependencies": {

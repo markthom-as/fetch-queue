@@ -1,6 +1,8 @@
 import r from 'rethinkdb';
 import jackrabbit from 'jackrabbit';
 import uuid from 'uuid';
+import format from 'format-url';
+import validate from 'url-validator';
 import statuses from './statuses.js';
 
 // initialize db connection
@@ -28,7 +30,9 @@ export function getJob(id) {
     .then((cursor) => {
       return cursor.toArray();
     }).then((results) => {
-      console.log(results);
+      results = results[0];
+      // clean up internal id
+      delete results.id;
       return results;
     }).catch((err) => {
       if (err) throw err;
@@ -37,6 +41,11 @@ export function getJob(id) {
 
 // createJob Handler
 export function createJob(url, requestor) {
+  // format + validate url
+  url = format(url);
+  url = validate(url);
+  console.log(url);
+  if (url === false) throw new Error('Malformed URL');
   // generate unique id for job
   let id = uuid.v1();
 
@@ -58,9 +67,9 @@ export function createJob(url, requestor) {
     if (err) throw err;
   });
   // return jobId and status
-  return JSON.stringify({
+  return {
     url: url,
     status: statuses.PENDING,
     jobId: id
-  });
+  };
 }

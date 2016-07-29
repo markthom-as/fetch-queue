@@ -1,7 +1,6 @@
 import jackrabbit from 'jackrabbit';
 import r from 'rethinkdb';
-import download from 'download';
-import fs from 'fs';
+import request from 'request';
 import statuses from './statuses.js';
 
 // initialize db connection
@@ -21,15 +20,18 @@ queue.default()
   .queue({name: 'scraper'})
   .consume((data) => {
     console.log('Downloading', data.url);
-    download(data.url).then((payload) => {
-      r.db('test').table('jobs').get(data.primaryKey).update({
-        status: statuses.COMPLETE,
-        updatedAt: new Date(),
-        payload: payload
-      }).run(connection).then((result) => {
-        console.log('Job:', data.jobId, 'Completed...');
-      }).catch((err) => {
-        if (err) throw err;
+    request({
+        uri: data.url,
+      }, (error, response, body) => {
+        if (error) throw error;
+        r.db('test').table('jobs').get(data.primaryKey).update({
+          status: statuses.COMPLETE,
+          updatedAt: new Date(),
+          payload: body
+        }).run(connection).then((result) => {
+          console.log('Job:', data.jobId, 'Completed...');
+        }).catch((err) => {
+          if (err) throw err;
+        });
       });
-    })
   }, {noAck: true});

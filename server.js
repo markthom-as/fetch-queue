@@ -9,13 +9,13 @@ server.connection({port: 8888});
 server.route({
   method: 'GET',
   path: '/createJob/{url?}',
-  handler: (req, res) => res(createJob(req.params.url, req.info.host))
+  handler: (req, res) => res(createJob(req.params.url, req.info.remoteAddress))
 });
 
 server.route({
   method: 'GET',
   path: '/getJob/{id?}',
-  handler: (req, res) => res(getJob(req.params.id, req.info.host))
+  handler: (req, res) => res(getJob(req.params.id, req.info.rempteAddress))
 });
 
 // Start Server
